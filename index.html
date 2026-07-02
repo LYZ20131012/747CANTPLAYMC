@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>华山第二小学 - 六年级六班毕业纪念</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .date {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        nav {
+            background: #333;
+            padding: 15px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ff6b6b;
+        }
+
+        main {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #ff6b6b;
+        }
+
+        p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .photo-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            background: #e9ecef;
+            border: 2px dashed #adb5bd;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            100% { left: 100%; }
+        }
+
+        .photo-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            opacity: 0.3;
+        }
+
+        .photo-error {
+            color: #6c757d;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+
+        .photo-hint {
+            color: #adb5bd;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .video-section {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            margin: 30px 0;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .video-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(17, 153, 142, 0.4);
+        }
+
+        .video-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .video-title {
+            font-size: 2em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .video-desc {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: white;
+            color: #11998e;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .download-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            color: #adb5bd;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .class-info {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #ffc107;
+            margin: 20px 0;
+        }
+
+        .class-info strong {
+            color: #856404;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .footer-links {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #ff6b6b;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .hidden-easter-egg {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background: transparent;
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        .hidden-text {
+            display: none;
+            position: fixed;
+            bottom: 40px;
+            right: 10px;
+            background: #333;
+            color: #ff6b6b;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            max-width: 250px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .hidden-easter-egg:hover + .hidden-text {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="hidden-easter-egg"></div>
+    <div class="hidden-text">
+        <strong>提示：</strong>毕业照附件丢失了...<br>
+        也许你需要运行那个程序才能看到真相？
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>华山第二小学</h1>
+            <p class="subtitle">六年级六班 · 毕业纪念博客</p>
+            <p class="date">毕业时间：2024年6月28日</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#home">首页</a></li>
+                <li><a href="#photos">毕业照</a></li>
+                <li><a href="#video">毕业视频</a></li>
+                <li><a href="#about">关于我们</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section id="home" class="section">
+                <h2>🎉 毕业快乐！</h2>
+                <p>时光飞逝，转眼间我们已经在华山第二小学度过了六年的美好时光。从懵懂的一年级新生，到即将步入中学的毕业生，我们一起经历了无数的欢笑与泪水。</p>
+                <p>这个博客是我们六（6）班的毕业纪念册，记录了我们在一起的点点滴滴。希望大家能在这里找到美好的回忆，也希望未来我们能再次相聚！</p>
+                
+                <div class="class-info">
+                    <p><strong>班级名称：</strong>华山第二小学 六年级六班</p>
+                    <p><strong>班主任：</strong>张老师</p>
+                    <p><strong>班级人数：</strong>45人</p>
+                    <p><strong>毕业时间：</strong>2024年6月28日</p>
+                </div>
+            </section>
+
+            <section id="photos" class="section">
+                <h2>📸 毕业照</h2>
+                <p>毕业那天，我们穿着整齐的校服，在教学楼前拍下了这张珍贵的毕业照。照片里的每个人都笑得那么灿烂，那是我们青春最美好的模样。</p>
+                
+                <div class="photo-section">
+                    <div class="photo-placeholder">
+                        <span class="photo-icon">📷</span>
+                        <p class="photo-error">附件丢失</p>
+                        <p class="photo-hint">抱歉，毕业照文件无法正常显示...</p>
+                    </div>
+                    <p style="color: #6c757d;">也许你需要找到正确的打开方式？</p>
+                </div>
+
+                <h3>班级活动照片</h3>
+                <div class="gallery">
+                    <div class="gallery-item">🏀</div>
+                    <div class="gallery-item">🎨</div>
+                    <div class="gallery-item">🎭</div>
+                    <div class="gallery-item">🌳</div>
+                    <div class="gallery-item">📚</div>
+                    <div class="gallery-item">🎓</div>
+                </div>
+            </section>
+
+            <section id="video" class="section">
+                <h2>🎬 毕业视频</h2>
+                <p>我们精心制作了一段毕业纪念视频，记录了我们六年的校园生活。点击下方按钮观看！</p>
+                
+                <div class="video-section" onclick="window.location.href='https://github.com/yourusername/yourrepo/releases/download/v1.0/graduation_video.exe'">
+                    <span class="video-icon">▶️</span>
+                    <p class="video-title">观看我们的毕业视频</p>
+                    <p class="video-desc">点击下载并运行，重温美好时光</p>
+                    <span class="download-btn">立即下载</span>
+                </div>
+                
+                <p style="text-align: center; color: #6c757d; font-size: 0.9em;">
+                    文件大小：约 15MB | 格式：.exe | 兼容系统：Windows
+                </p>
+            </section>
+
+            <section id="about" class="section">
+                <h2>👨‍👩‍👧‍👦 关于我们</h2>
+                <p>华山第二小学六年级六班是一个充满活力和创造力的集体。我们在学习上互相帮助，在生活中互相关心，在活动中团结协作。</p>
+                <p>六年来，我们获得了无数的荣誉：校运动会团体第一名、艺术节最佳表演奖、科技创新大赛优秀组织奖等等。这些荣誉离不开每一位同学的努力和付出。</p>
+                <p>如今，我们即将各奔东西，踏上新的征程。但我们相信，无论走到哪里，六（6）班的精神永远在我们心中！</p>
+                
+                <div style="background: #e7f3ff; padding: 20px; border-radius: 10px; border-left: 5px solid #007bff; margin-top: 20px;">
+                    <p><strong>💡 温馨提示：</strong></p>
+                    <p>如果你在浏览本博客时遇到任何问题，或者发现了什么特别的东西，请不要惊慌。这可能只是一个小小的彩蛋，等待你去发现。</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-links">
+                <a href="https://github.com">GitHub</a>
+                <a href="mailto:contact@example.com">联系我们</a>
+                <a href="#">友情链接</a>
+            </div>
+            <p>&copy; 2024 华山第二小学六年级六班 版权所有</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const photoSection = document.querySelector('.photo-section');
+            let clickCount = 0;
+            
+            photoSection.addEventListener('click', function() {
+                clickCount++;
+                if (clickCount === 3) {
+                    const hint = document.createElement('p');
+                    hint.style.color = '#ff6b6b';
+                    hint.style.fontWeight = 'bold';
+                    hint.style.marginTop = '15px';
+                    hint.textContent = '提示：也许你需要运行那个程序才能看到毕业照？';
+                    photoSection.appendChild(hint);
+                }
+            });
+
+            const videoSection = document.querySelector('.video-section');
+            videoSection.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 20px 50px rgba(17, 153, 142, 0.5)';
+            });
+            videoSection.addEventListener('mouseleave', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
