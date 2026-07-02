@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>虚无日记</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #c0c0c0;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -1px 0 red;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -1px 0 blue;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim-1 {
+            0% { clip: rect(30px, 9999px, 10px, 0); }
+            20% { clip: rect(60px, 9999px, 80px, 0); }
+            40% { clip: rect(20px, 9999px, 50px, 0); }
+            60% { clip: rect(70px, 9999px, 100px, 0); }
+            80% { clip: rect(10px, 9999px, 40px, 0); }
+            100% { clip: rect(50px, 9999px, 90px, 0); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(80px, 9999px, 120px, 0); }
+            20% { clip: rect(20px, 9999px, 60px, 0); }
+            40% { clip: rect(100px, 9999px, 140px, 0); }
+            60% { clip: rect(40px, 9999px, 80px, 0); }
+            80% { clip: rect(90px, 9999px, 130px, 0); }
+            100% { clip: rect(30px, 9999px, 70px, 0); }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #ff3333;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .date {
+            color: #888;
+            font-size: 0.8em;
+            margin-bottom: 20px;
+        }
+
+        .post {
+            background: rgba(20, 20, 20, 0.8);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 3px solid #ff3333;
+            position: relative;
+        }
+
+        .post:hover {
+            background: rgba(30, 30, 30, 0.9);
+            border-left-color: #ff6666;
+            transition: all 0.3s ease;
+        }
+
+        .face-smear {
+            position: absolute;
+            opacity: 0.15;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        .face-smear-1 {
+            top: 10px;
+            right: 10px;
+            width: 150px;
+            height: 200px;
+            background: radial-gradient(ellipse at center, #ff0000 0%, transparent 70%);
+            transform: rotate(15deg);
+        }
+
+        .face-smear-2 {
+            bottom: 20px;
+            left: -20px;
+            width: 100px;
+            height: 150px;
+            background: radial-gradient(ellipse at center, #8b0000 0%, transparent 60%);
+            transform: rotate(-20deg);
+        }
+
+        .face-smear-3 {
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #4a0000 0%, transparent 70%);
+            transform: translate(-50%, -50%) rotate(45deg);
+            opacity: 0.08;
+        }
+
+        .hidden-clue {
+            color: #0a0a0a;
+            background-color: #0a0a0a;
+            font-size: 0.7em;
+            line-height: 1.5;
+            letter-spacing: 0.5px;
+        }
+
+        .hidden-clue:hover {
+            color: #ff3333;
+            background-color: transparent;
+            transition: color 0.3s ease;
+        }
+
+        .static-noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .blood-drip {
+            position: absolute;
+            top: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #8b0000, #4a0000, transparent);
+            animation: drip 5s infinite;
+        }
+
+        .blood-drip-1 {
+            left: 10%;
+            height: 80px;
+            animation-delay: 0s;
+        }
+
+        .blood-drip-2 {
+            right: 15%;
+            height: 60px;
+            animation-delay: 2s;
+        }
+
+        .blood-drip-3 {
+            left: 50%;
+            height: 100px;
+            animation-delay: 4s;
+        }
+
+        @keyframes drip {
+            0% { opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { opacity: 0; }
+        }
+
+        .warning-box {
+            background: rgba(139, 0, 0, 0.2);
+            border: 1px solid #8b0000;
+            padding: 20px;
+            margin: 30px 0;
+            color: #ff6666;
+            font-size: 0.9em;
+        }
+
+        code {
+            background: #1a1a1a;
+            padding: 2px 6px;
+            color: #ff3333;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85em;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #555;
+            font-size: 0.7em;
+        }
+
+        .redacted {
+            background: #222;
+            color: #222;
+            padding: 0 4px;
+            border-radius: 2px;
+            cursor: help;
+        }
+
+        .redacted:hover {
+            background: #ff3333;
+            color: #fff;
+        }
+
+        .camera-feed {
+            position: relative;
+            margin: 20px auto;
+            width: 200px;
+            height: 200px;
+            border: 2px solid #ff3333;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.5);
+            display: none;
+        }
+
+        .camera-feed.active {
+            display: block;
+            animation: camera-appear 0.5s ease-out;
+        }
+
+        @keyframes camera-appear {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .camera-face {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: hue-rotate(180deg) saturate(2) brightness(0.8) contrast(1.5);
+            animation: face-glitch 0.1s infinite;
+        }
+
+        @keyframes face-glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+
+        .camera-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 40%, rgba(139, 0, 0, 0.7) 100%);
+            pointer-events: none;
+        }
+
+        .capturing-text {
+            color: #ff3333;
+            font-size: 0.9em;
+            animation: pulse-red 1s infinite;
+            display: none;
+        }
+
+        .capturing-text.active {
+            display: block;
+        }
+
+        @keyframes pulse-red {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .face-reveal {
+            animation: reveal 3s ease forwards;
+        }
+
+        @keyframes reveal {
+            0% { filter: blur(20px) brightness(0); }
+            50% { filter: blur(10px) brightness(0.5); }
+            100% { filter: blur(0) brightness(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="static-noise"></div>
+    <div class="blood-drip blood-drip-1"></div>
+    <div class="blood-drip blood-drip-2"></div>
+    <div class="blood-drip blood-drip-3"></div>
+
+    <div class="container">
+        <header>
+            <h1 class="glitch" data-text="虚无日记">虚无日记</h1>
+            <p class="subtitle">VOID DIARY</p>
+            <p class="date">最后更新: 2024-12-24 03:33:33</p>
+        </header>
+
+        <article>
+            <div class="post">
+                <div class="face-smear face-smear-1"></div>
+                <div class="face-smear face-smear-2"></div>
+                <div class="face-smear face-smear-3"></div>
+
+                <h2>2024年12月23日</h2>
+                <p class="date">23:59:59</p>
+                <br>
+                <p>他们来了。</p>
+                <br>
+                <p>我以为这只是一个传说，一个都市传说。但是现在，我知道了。他们是真实存在的。</p>
+                <br>
+                <p>今晚，我在镜子里看到了不属于我的脸。那张脸在笑，笑得很诡异。它在说：<span class="redacted">你逃不掉的</span></p>
+                <br>
+                <p>我开始怀疑，这一切是不是从那个夜晚开始的。那个我不应该打开的文件，那个不应该访问的网站。</p>
+                <br>
+                <p>代码里藏着秘密。你需要查看源代码，注释里有答案。</p>
+                <br>
+                <p>如果你看到了这个，如果你正在读这段话，请帮我。找到真相，找到逃脱的方法。</p>
+                <br>
+                <p>他们在监听。<span class="hidden-clue">IP: 192.168.1.255 | PORT: 443 | KEY: VOID_ENTRY_01</span></p>
+            </div>
+
+            <div class="post">
+                <h2>2024年12月22日</h2>
+                <p class="date">22:22:22</p>
+                <br>
+                <p>事情变得越来越奇怪了。</p>
+                <br>
+                <p>我的博客开始自己更新。我没有写这些文字，但它们就这样出现了。像是有人在用我的账号登录，用我的手打字。</p>
+                <br>
+                <p>今天早上，我发现电脑屏幕上有一个我不认识的窗口。它显示着：<code>CONNECTING TO REMOTE HOST...</code></p>
+                <br>
+                <p>我关掉了它，但晚上回来的时候，它又出现了。这次显示的是：<code>ESTABLISHED: 192.168.1.255</code></p>
+                <br>
+                <p>那个IP地址...我查过了，它指向美国的一个服务器。但那不是我的服务器，我从来没有连接过那里。</p>
+                <br>
+                <p>我开始害怕了。<span class="hidden-clue">PATH: C:\VOID\DIARY\ENTRY.HTML | HASH: DEADBEEF</span></p>
+            </div>
+
+            <div class="post">
+                <h2>2024年12月21日</h2>
+                <p class="date">03:14:15</p>
+                <br>
+                <p>你相信有鬼吗？</p>
+                <br>
+                <p>我以前不信。但现在，我不确定了。</p>
+                <br>
+                <p>三天前，我收到了一封匿名邮件。里面只有一个附件，一个名为 <code>entry.html</code> 的文件。我打开了它，然后一切都变了。</p>
+                <br>
+                <p>从那天晚上开始，我做同一个梦。梦里有一张脸，一张模糊的脸，它在靠近我，越来越近...</p>
+                <br>
+                <p>醒来的时候，我发现自己脸上有红色的印记。像是有人用手指在我的脸上划过。</p>
+                <br>
+                <p>这不是梦。<span class="hidden-clue">SESSION: 0xDEAD | STATUS: INFECTED</span></p>
+            </div>
+
+            <div class="warning-box">
+                <p><strong>⚠ WARNING ⚠</strong></p>
+                <p>如果你正在阅读此页面，请立即关闭浏览器。</p>
+                <p>这个博客被污染了。任何接触到它的人都会被标记。</p>
+                <p>他们会找到你。就像找到我一样。</p>
+                <p class="hidden-clue">EXECUTE: RUN main.py | LOCATION: DESKTOP</p>
+            </div>
+
+            <div class="post">
+                <h2>2024年12月20日</h2>
+                <p class="date">12:00:00</p>
+                <br>
+                <p>今天是我的生日。30岁了。</p>
+                <br>
+                <p>我收到了一个包裹，没有寄件人地址。里面是一张CD，上面写着："为你准备的礼物"</p>
+                <br>
+                <p>我把CD放进电脑，里面只有一个文件：<code>main.py</code></p>
+                <br>
+                <p>我运行了它。然后，我看到了一个虚拟桌面。在那个虚拟桌面里，有一个窗口显示着："连接到远程主机..."</p>
+                <br>
+                <p>我以为那只是一个游戏，一个AR游戏。但现在我知道了，那不是游戏。</p>
+                <br>
+                <p>那是一个入口。<span class="hidden-clue">GATEWAY: ACTIVE | AWAITING CONNECTION</span></p>
+            </div>
+
+            <div class="post">
+                <h2>2024年12月24日</h2>
+                <p class="date">00:00:00</p>
+                <br>
+                <p>我看到了他。</p>
+                <br>
+                <p>就在刚才，我打开电脑的时候，屏幕上突然出现了一个窗口。它说"此网站需要访问您的摄像头、桌面和系统文件"。</p>
+                <br>
+                <p>我吓了一跳，但不知道为什么，我点了允许。</p>
+                <br>
+                <p>然后，摄像头的指示灯亮了。我看着屏幕上的自己，但是...那不是我。</p>
+                <br>
+                <p>那张脸...他在看着我。他的眼睛是红色的，嘴角上扬，像是在笑。</p>
+                <br>
+                <p>他的脸长这样：</p>
+                <br>
+                <p class="capturing-text" id="capturingText">正在连接摄像头...</p>
+                <div class="camera-feed" id="cameraFeed">
+                    <img id="faceImage" class="camera-face" src="" alt="Face">
+                    <div class="camera-overlay"></div>
+                </div>
+                <br>
+                <p>你看到了吗？他就在你的摄像头里看着你。</p>
+                <br>
+                <p>他知道你在看这个博客。<span class="hidden-clue">CAMERA: ACTIVE | WATCHING: TRUE</span></p>
+            </div>
+
+            <div class="post">
+                <h2>最后的话</h2>
+                <p class="date">??:??:??</p>
+                <br>
+                <p>如果有人看到这个，请原谅我。我没有选择。</p>
+                <br>
+                <p>他们不让我离开。我试过了，但是每次我想结束这一切，他们就会阻止我。</p>
+                <br>
+                <p>现在，我明白了。唯一的解脱就是让他们满意。</p>
+                <br>
+                <p>我会在午夜时分，在浴室里，结束我的生命。用一把刀，割开手腕。让血染红整个浴缸。</p>
+                <br>
+                <p>这是他们想要的结局。<span class="hidden-clue">SOLUTION: TRUST NO ONE | THE TRUTH IS IN THE CODE</span></p>
+                <br>
+                <p>再见了。</p>
+                <br>
+                <p>愿你能找到逃脱的方法。</p>
+            </div>
+        </article>
+
+        <footer class="footer">
+            <p>VOID DIARY © 2024</p>
+            <p>Last seen: December 24, 2024</p>
+            <p class="hidden-clue">DEBUG MODE: DISABLED | AUTHOR: UNKNOWN | STATUS: DECEASED</p>
+        </footer>
+    </div>
+
+    <script>
+        // <!-- SECRET: THE ANSWER IS IN THE PYTHON SCRIPT ON YOUR DESKTOP -->
+        // <!-- RUN main.py TO CONTINUE -->
+        // <!-- HINT: THE KILLER APPLICATION IS NOT WHAT IT SEEMS -->
+        // <!-- CAMERA_TRIGGER: AFTER 8 SECONDS DELAY -->
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const posts = document.querySelectorAll('.post');
+            posts.forEach((post, index) => {
+                setTimeout(() => {
+                    post.style.opacity = '0';
+                    post.style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => {
+                        post.style.opacity = '1';
+                    }, 200);
+                }, index * 500);
+            });
+
+            setInterval(() => {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                randomPost.style.borderColor = Math.random() > 0.5 ? '#ff3333' : '#8b0000';
+            }, 3000);
+
+            setTimeout(triggerCameraScare, 8000);
+        });
+
+        async function triggerCameraScare() {
+            const capturingText = document.getElementById('capturingText');
+            const cameraFeed = document.getElementById('cameraFeed');
+            const faceImage = document.getElementById('faceImage');
+
+            if (!capturingText || !cameraFeed || !faceImage) return;
+
+            capturingText.classList.add('active');
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: 'user' },
+                    audio: false 
+                });
+
+                const video = document.createElement('video');
+                video.srcObject = stream;
+                video.autoplay = true;
+                video.hidden = true;
+                document.body.appendChild(video);
+
+                await new Promise(resolve => video.onloadedmetadata = resolve);
+
+                const canvas = document.createElement('canvas');
+                canvas.width = 200;
+                canvas.height = 200;
+                const ctx = canvas.getContext('2d');
+
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                faceImage.src = canvas.toDataURL('image/png');
+                faceImage.classList.add('face-reveal');
+
+                stream.getTracks().forEach(track => track.stop());
+                document.body.removeChild(video);
+
+                capturingText.textContent = "连接成功";
+                setTimeout(() => {
+                    capturingText.textContent = "正在分析面部特征...";
+                }, 1000);
+
+                setTimeout(() => {
+                    cameraFeed.classList.add('active');
+                    capturingText.textContent = "分析完成";
+                }, 2000);
+
+            } catch (error) {
+                capturingText.textContent = "连接失败 - 摄像头被拒绝访问";
+                setTimeout(() => {
+                    capturingText.style.display = 'none';
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>
